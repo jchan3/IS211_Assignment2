@@ -21,8 +21,12 @@ def downloadData(urlstr):
     try:
         response = urllib2.urlopen(urlstr)
         result = response.read()
-    except IOError:
-        print "Error: cannot find file or read data"
+    except urllib2.HTTPError as e:
+        print "The server could not fulfill the request."
+        print "Error code: ", e.code
+    except urllib2.URLError as e:
+        print "We failed to reach a server."
+        print "Reason: ", e.reason
     else:
         return result
 
